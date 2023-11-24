@@ -2,61 +2,70 @@ package ru.clevertec.cache.impl;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import ru.clevertec.cache.Cache;
+import ru.clevertec.cache.util.EntityTestBuilder;
+import ru.clevertec.entity.Entity;
 
-import static org.junit.jupiter.api.Assertions.*;
+import java.util.UUID;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 class LRUCacheTest {
-//    private Cache<Long, Card> cache;
-//
-//    @BeforeEach
-//    void init() {
-//        cache = new LFUCache<>(3);
-//
-//        cache.put(1L, new Card("1"));
-//        cache.put(2L, new Card("2"));
-//        cache.put(3L, new Card("3"));
-//    }
-//
-//    @Test
-//    void testGetWithExistingKey() {
-//        var expected = new Card("1");
-//
-//        var actual = cache.get(1L);
-//
-//        assertNotNull(actual);
-//        assertEquals(expected, actual);
-//    }
-//
-//    @Test
-//    void testGetWithNotExistingKey() {
-//        var actual = cache.get(0L);
-//
-//        assertNull(actual);
-//    }
-//
-//    @Test
-//    void testPutWithNewValue() {
-//        var expected = new Card("4");
-//        cache.put(4L, expected);
-//
-//        assertNull(cache.get(1L));
-//        assertEquals(expected, cache.get(4L));
-//    }
-//
-//    @Test
-//    void testRemoveByExistingKey() {
-//        var expected = new Card("1");
-//
-//        var actual = cache.remove(1L);
-//
-//        assertNotNull(actual);
-//        assertEquals(expected, actual);
-//    }
-//
-//    @Test
-//    void testRemoveByNotExistingKey() {
-//        var actual = cache.remove(0L);
-//
-//        assertNull(actual);
-//    }
+    private Cache<UUID, Entity> cache;
+
+    @BeforeEach
+    void init() {
+        cache = new LFUCache<>(3);
+
+        cache.put(EntityTestBuilder.anEntity().getId(), EntityTestBuilder.anEntity().build());
+        cache.put(UUID.fromString("87142b69-8eea-4a9d-a1e7-f9d62823d128"),
+                EntityTestBuilder.anEntity().withId(UUID.fromString("87142b69-8eea-4a9d-a1e7-f9d62823d128")).build());
+        cache.put(UUID.fromString("90e57c02-7d73-4cff-844a-2a511ee3230b"),
+                EntityTestBuilder.anEntity().withId(UUID.fromString("90e57c02-7d73-4cff-844a-2a511ee3230b")).build());
+    }
+
+    @Test
+    void testGetWithExistingKey() {
+        var expected = EntityTestBuilder.anEntity().build();
+
+        var actual = cache.get(EntityTestBuilder.anEntity().getId());
+
+        assertNotNull(actual);
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void testGetWithNotExistingKey() {
+        var actual = cache.get(EntityTestBuilder.anEntity().getNonExistingId());
+
+        assertNull(actual);
+    }
+
+    @Test
+    void testPutWithNewValue() {
+        var expected = EntityTestBuilder.anEntity().withId(EntityTestBuilder.anEntity().getNonExistingId()).build();
+        cache.put(expected.getId(), expected);
+
+        assertNull(cache.get(EntityTestBuilder.anEntity().getId()));
+        assertEquals(expected, cache.get(expected.getId()));
+    }
+
+    @Test
+    void testRemoveByExistingKey() {
+        var expected = EntityTestBuilder.anEntity().build();
+
+        var actual = cache.remove(EntityTestBuilder.anEntity().getId());
+
+        assertNotNull(actual);
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void testRemoveByNotExistingKey() {
+        var actual = cache.remove(EntityTestBuilder.anEntity().getNonExistingId());
+
+        assertNull(actual);
+    }
 }

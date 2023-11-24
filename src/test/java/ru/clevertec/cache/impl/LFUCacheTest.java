@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullSource;
 import ru.clevertec.cache.Cache;
-import ru.clevertec.cache.impl.util.EntityTestBuilder;
+import ru.clevertec.cache.util.EntityTestBuilder;
 import ru.clevertec.entity.Entity;
 
 import java.util.UUID;

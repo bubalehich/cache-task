@@ -1,4 +1,4 @@
-package ru.clevertec.cache.impl.util;
+package ru.clevertec.cache.util;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
