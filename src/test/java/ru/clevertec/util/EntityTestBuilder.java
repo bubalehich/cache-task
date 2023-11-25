@@ -1,4 +1,4 @@
-package ru.clevertec.cache.util;
+package ru.clevertec.util;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,7 +7,10 @@ import lombok.With;
 import ru.clevertec.entity.Entity;
 
 import java.time.Instant;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 import java.util.UUID;
 
 @NoArgsConstructor(staticName = "anEntity")
@@ -30,7 +33,17 @@ public class EntityTestBuilder {
                 .isActive(isActive)
                 .build();
     }
-    public UUID getNonExistingId(){
-       return UUID.fromString("87142b69-8eea-4a9d-a1e7-f9d62823d188");
+
+    public UUID getNonExistingId() {
+        return UUID.fromString("87142b69-8eea-4a9d-a1e7-f9d62823d188");
+    }
+
+    public LinkedHashMap<UUID, Entity> getMapOfEntities() {
+        var map = new LinkedHashMap<UUID, Entity>();
+        map.put(id, EntityTestBuilder.anEntity().build());
+        map.put(UUID.fromString("87142b69-8eea-4a9d-a1e7-f9d62823d128"), EntityTestBuilder.anEntity().withId(UUID.fromString("87142b69-8eea-4a9d-a1e7-f9d62823d128")).build());
+        map.put(UUID.fromString("90e57c02-7d73-4cff-844a-2a511ee3230b"), EntityTestBuilder.anEntity().withId(UUID.fromString("90e57c02-7d73-4cff-844a-2a511ee3230b")).build());
+
+        return map;
     }
 }

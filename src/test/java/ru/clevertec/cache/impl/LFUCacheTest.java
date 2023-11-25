@@ -5,8 +5,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullSource;
 import ru.clevertec.cache.Cache;
-import ru.clevertec.cache.util.EntityTestBuilder;
 import ru.clevertec.entity.Entity;
+import ru.clevertec.util.EntityTestBuilder;
 
 import java.util.UUID;
 
@@ -20,12 +20,7 @@ class LFUCacheTest {
     @BeforeEach
     void init() {
         cache = new LFUCache<>(3);
-
-        cache.put(EntityTestBuilder.anEntity().getId(),  EntityTestBuilder.anEntity().build());
-        cache.put(UUID.fromString("87142b69-8eea-4a9d-a1e7-f9d62823d128"),
-                EntityTestBuilder.anEntity().withId(UUID.fromString("87142b69-8eea-4a9d-a1e7-f9d62823d128")).build());
-        cache.put(UUID.fromString("90e57c02-7d73-4cff-844a-2a511ee3230b"),
-                EntityTestBuilder.anEntity().withId(UUID.fromString("90e57c02-7d73-4cff-844a-2a511ee3230b")).build());
+        EntityTestBuilder.anEntity().getMapOfEntities().forEach((k, v) -> cache.put(k, v));
     }
 
     @Test
