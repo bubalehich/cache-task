@@ -20,7 +20,9 @@ class LFUCacheTest {
     @BeforeEach
     void init() {
         cache = new LFUCache<>(3);
-        EntityTestBuilder.anEntity().getMapOfEntities().forEach((k, v) -> cache.put(k, v));
+        EntityTestBuilder.anEntity()
+                .getMapOfEntities()
+                .forEach((k, v) -> cache.put(k, v));
     }
 
     @Test
@@ -51,7 +53,8 @@ class LFUCacheTest {
     @Test
     void testPutWithNewValue() {
         var expected = EntityTestBuilder.anEntity()
-                .withId(EntityTestBuilder.anEntity().getNonExistingId())
+                .withId(EntityTestBuilder.anEntity()
+                        .getNonExistingId())
                 .build();
         cache.put(expected.getId(), expected);
 

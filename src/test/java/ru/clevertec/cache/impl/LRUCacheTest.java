@@ -3,8 +3,8 @@ package ru.clevertec.cache.impl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ru.clevertec.cache.Cache;
-import ru.clevertec.util.EntityTestBuilder;
 import ru.clevertec.entity.Entity;
+import ru.clevertec.util.EntityTestBuilder;
 
 import java.util.UUID;
 
@@ -19,7 +19,9 @@ class LRUCacheTest {
     void init() {
         cache = new LFUCache<>(3);
 
-        EntityTestBuilder.anEntity().getMapOfEntities().forEach((k,v) -> cache.put(k,v));
+        EntityTestBuilder.anEntity()
+                .getMapOfEntities()
+                .forEach((k, v) -> cache.put(k, v));
     }
 
     @Test
@@ -41,7 +43,10 @@ class LRUCacheTest {
 
     @Test
     void testPutWithNewValue() {
-        var expected = EntityTestBuilder.anEntity().withId(EntityTestBuilder.anEntity().getNonExistingId()).build();
+        var expected = EntityTestBuilder.anEntity()
+                .withId(EntityTestBuilder.anEntity()
+                        .getNonExistingId())
+                .build();
         cache.put(expected.getId(), expected);
 
         assertNull(cache.get(EntityTestBuilder.anEntity().getId()));
