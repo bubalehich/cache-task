@@ -9,15 +9,15 @@ import java.util.Optional;
 import java.util.UUID;
 
 @RequiredArgsConstructor
-public class ProxyRepositoryInMemory extends InMemoryEntityRepository {
+public class ProxyInMemoryRepository extends InMemoryEntityRepository {
     private InMemoryEntityRepository repository;
     private Cache<UUID, Entity> cache;
 
     @Override
     public Optional<Entity> findById(UUID id) {
-        return Optional.ofNullable(cache.get(id)).isPresent()
-                ? Optional.ofNullable(cache.get(id))
-                : repository.findById(id);
+        var entity = Optional.ofNullable(cache.get(id));
+
+        return entity.isPresent() ? entity : repository.findById(id);
     }
 
     @Override
