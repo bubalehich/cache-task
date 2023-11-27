@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.With;
+import ru.clevertec.dto.impl.InputEntityDto;
+import ru.clevertec.dto.impl.OutputEntityDto;
 import ru.clevertec.entity.Entity;
 
 import java.time.Instant;
@@ -29,6 +31,21 @@ public class EntityTestBuilder {
                 .modifiedAt(modifiedAt)
                 .collection(collection)
                 .isActive(isActive)
+                .build();
+    }
+
+    public InputEntityDto getInputEntityDto() {
+        return InputEntityDto.builder()
+                .isActive(isActive)
+                .collection(collection)
+                .build();
+    }
+
+    public OutputEntityDto getOutputEntityDto() {
+        return OutputEntityDto.builder()
+                .id(id)
+                .isActive(isActive)
+                .collection(collection)
                 .build();
     }
 
